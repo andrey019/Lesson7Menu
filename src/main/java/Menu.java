@@ -16,7 +16,16 @@ public class Menu {
     @Column(nullable = false)
     private int weight;
 
-    private Integer discount = null;
+    private int discount = 0;
+
+    public Menu() {}
+
+    public Menu(String name, double price, int weight, int discount) {
+        this.name = name;
+        this.price = price;
+        this.weight = weight;
+        this.discount = discount;
+    }
 
     public long getId() {
         return id;
@@ -52,5 +61,10 @@ public class Menu {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id + ", name=" + name + ", price=" + price + ", weight=" + weight + ", discount=" + discount;
     }
 }

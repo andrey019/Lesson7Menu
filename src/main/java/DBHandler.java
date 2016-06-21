@@ -137,13 +137,18 @@ public class DBHandler implements DBInterface {
         try {
             int totalWeight = 0;
             List entities = getWithWeightLowerThan(objectClass, maxWeight);
+            if ( (entities == null) || (entities.isEmpty()) ) {
+                return null;
+            }
             List result = new ArrayList<>();
             Menu menu = (Menu) entities.get(ThreadLocalRandom.current().nextInt(0, entities.size()));
             do {
-                result.add(menu);
-                totalWeight += menu.getWeight();
+                if (!result.contains(menu)) {
+                    result.add(menu);
+                    totalWeight += menu.getWeight();
+                }
                 menu = (Menu) entities.get(ThreadLocalRandom.current().nextInt(0, entities.size()));
-            } while ( (totalWeight + menu.getWeight()) < maxWeight);
+            } while ( ((totalWeight + menu.getWeight()) < maxWeight) && (entities.size() != result.size()) );
             return result;
         } catch (Exception e) {
             e.printStackTrace();
